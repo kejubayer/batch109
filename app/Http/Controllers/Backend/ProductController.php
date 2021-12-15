@@ -22,10 +22,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
+        $photo = $request->file('photo');
+        $newName = 'product_'.time().'.'.$photo->getClientOriginalExtension();
+        $photo->move('uploads/products',$newName);
         $inputs = [
             'name'=>$request->input('name'),
             'price'=>$request->input('price'),
             'desc'=>$request->input('desc'),
+            'photo'=>$newName
         ];
         Product::create($inputs);
         return redirect()->route('admin.product');
@@ -45,13 +49,27 @@ class ProductController extends Controller
             'price'=>$request->input('price'),
             'desc'=>$request->input('desc'),
         ];
+        $photo = $request->file('photo');
+        if ($photo){
+            if (file_exists('uploads/products/'.$product->photo)){
+                unlink('uploads/products/'.$product->photo);
+            }
+            $newName = 'product_'.time().'.'.$photo->getClientOriginalExtension();
+            $photo->move('uploads/products',$newName);
+            $inputs['photo'] = $newName;
+        }
         $product->update($inputs);
         return redirect()->route('admin.product');
     }
 
     public function delete($id)
     {
-        Product::where('id',$id)->delete();
+        $product = Product::find($id);
+
+        if (file_exists('uploads/products/'.$product->photo)){
+            unlink('uploads/products/'.$product->photo);
+        }
+        $product->delete();
         return redirect()->back();
     }
 }

@@ -6,7 +6,7 @@
         <h3 class="text-center mt-3">Update Product</h3>
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <form action="{{route('admin.product.edit',$product->id)}}" method="post">
+            <form action="{{route('admin.product.edit',$product->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Product Name</label>
@@ -19,6 +19,11 @@
                 <div class="mb-3">
                     <label for="desc" class="form-label">Description</label>
                     <textarea name="desc" class="form-control" id="desc" placeholder="Inter Product Description" rows="5">{{$product->desc}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Photo</label>
+                    <input type="file" class="form-control" name="photo" id="photo">
+                    <img src="{{asset('uploads/products/'.$product->photo)}}" alt="{{$product->name}}" class="mt-2" width="80px">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
