@@ -6,6 +6,15 @@
         <h3 class="text-center mt-3">Update Product</h3>
         <div class="col-md-3"></div>
         <div class="col-md-6">
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+              @endif
             <form action="{{route('admin.product.edit',$product->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">

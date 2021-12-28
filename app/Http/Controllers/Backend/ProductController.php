@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -22,6 +23,26 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 //        dd($request->all());
+      /*  $request->validate([
+            'name' => 'required|max:96',
+            'price' => 'required',
+            'desc' => 'required',
+            'photo' => 'required|image|max:1024',
+        ],[
+            'photo.max'=>'The photo must not be greater than 1 MB.'
+        ]);*/
+         $validate = Validator::make($request->all(),[
+             'name' => 'required|max:96',
+             'price' => 'required',
+             'desc' => 'required',
+             'photo' => 'required|image|max:1024',
+         ],[
+             'photo.max'=>'The photo must not be greater than 1 MB.',
+             'photo.image'=>'The photo must be an image!'
+         ]);
+         if ($validate->fails()){
+             return redirect()->back()->withInput()->withErrors($validate->getMessageBag());
+         }
         $photo = $request->file('photo');
         $newName = 'product_'.time().'.'.$photo->getClientOriginalExtension();
         $photo->move('uploads/products',$newName);
@@ -43,6 +64,18 @@ class ProductController extends Controller
 
     public function update(Request $request,$id)
     {
+        $validate = Validator::make($request->all(),[
+            'name' => 'required|max:96',
+            'price' => 'required',
+            'desc' => 'required',
+            'photo' => 'image|max:1024',
+        ],[
+            'photo.max'=>'The photo must not be greater than 1 MB.',
+            'photo.image'=>'The photo must be an image!'
+        ]);
+        if ($validate->fails()){
+            return redirect()->back()->withInput()->withErrors($validate->getMessageBag());
+        }
         $product = Product::find($id);
         $inputs = [
             'name'=>$request->input('name'),
