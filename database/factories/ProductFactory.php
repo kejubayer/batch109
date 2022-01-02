@@ -14,7 +14,10 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'price' => $this->faker->numberBetween(1000,2000),
+            'desc' => $this->faker->realText(300),
+            'photo'=>$this->faker->imageUrl,
         ];
     }
 }

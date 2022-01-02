@@ -19,23 +19,26 @@
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach($products as $product)
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <img src="{{asset('uploads/products/'.$product->photo)}}" alt="" height="300px">
-                        <div class="card-body">
-                            <h3>{{$product->name}}</h3>
-                            <p class="card-text">{{$product->desc}}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart</button>
+                    <div class="col">
+                        <div class="card shadow-sm">
+{{--                            <img src="{{asset('uploads/products/'.$product->photo)}}" alt="" height="300px">--}}
+                            <img src="{{$product->photo}}" alt="" height="300px">
+                            <div class="card-body">
+                                <h3>{{$product->name}}</h3>
+                                <p class="card-text">{{$product->desc}}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Add To Cart
+                                        </button>
+                                    </div>
+                                    <small class="text-muted">{{$product->price}} <span
+                                            style="font-size: 20px;font-weight: bold">৳</span></small>
                                 </div>
-                                <small class="text-muted">{{$product->price}} <span style="font-size: 20px;font-weight: bold">৳</span></small>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
-
+                {{$products->links()}}
             </div>
         </div>
     </div>
