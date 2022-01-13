@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->text('address');
             $table->string('role')->default('customer');
             $table->string('password');
+            $table->string('photo')->default('user.png')->nullable();
             $table->timestamps();
         });
     }

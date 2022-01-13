@@ -36,6 +36,9 @@
 @include('frontend.partials.header')
 
 <main>
+    @if(session()->has('message'))
+        <p class="alert alert-{{session()->get('alert')}} text-center">{{session()->get('message')}}</p>
+    @endif
 @yield('main')
 </main>
 
