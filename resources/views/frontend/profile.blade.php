@@ -41,6 +41,33 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
+            <div class="col-md-6">
+                <h3 class="text-center">Your Cart!</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($orders as $order)
+                        <tr>
+                            <td>{{$order->created_at->format('d M, Y')}}</td>
+                            <td>{{$order->price}}</td>
+                            <td>{{$order->qty}}</td>
+                            <td>{{$order->status}}</td>
+                            <td><a href="{{route('order.show',$order->id)}}" class="btn btn-primary">View</a></td>
+                        </tr>
+
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

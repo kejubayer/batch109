@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::get('profile',[\App\Http\Controllers\Frontend\UserController::class,'profile'])->name('profile');
     Route::post('profile',[\App\Http\Controllers\Frontend\UserController::class,'updateProfile']);
 
+    Route::get('checkout',[\App\Http\Controllers\Frontend\OrderController::class,'checkout'])->name('checkout');
+    Route::post('checkout',[\App\Http\Controllers\Frontend\OrderController::class,'order']);
+    Route::get('order/{id}',[\App\Http\Controllers\Frontend\OrderController::class,'show'])->name('order.show');
+
     Route::middleware('isAdmin')->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [\App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
